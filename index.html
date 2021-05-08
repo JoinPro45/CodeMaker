@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>CodeMaker</title>
+	<meta charset="utf-8">
+	<link rel="shortcut icon" href="icon.png">
+	<link rel="manifest" href="manifest.json">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="qcss.css">
+	<style>
+		html {
+			height: 100%;
+		}
+		body, div {
+			margin: 30px;
+			height: 80%;
+		}
+		textarea {
+			width: 98%;
+			height: 80%;
+		}
+		tool-is {
+			position: absolute;
+  			left: 0;
+ 			bottom: 0;
+ 			width: 100%;
+ 			height: 50px;
+ 			padding: 20px;
+ 			overflow: scroll;
+		}
+	</style>
+</head>
+<body>
+	<div id="share-gui" center>
+		<h1-qcss>URL add:</h1-qcss>
+		<br><br>
+		<input id="url" qcss-input>
+		<br><br>
+		<qcss-button center id="button-ok">Ok</qcss-button>
+	</div>
+	<div id="files">
+		<h1-qcss>Files:</h1-qcss>
+		<br><br>
+		<qcss-button id="new" left>+ New</qcss-button><qcss-button id="delete" left>Delete All</qcss-button>
+		<br><br><br>
+	</div>
+	<div id="edit">
+		<h1-qcss id="file-name">Files:</h1-qcss>
+		<br><br>
+		<qcss-button left id="save">Save</qcss-button>
+		<a id="download" href="" download="index.html"><qcss-button left>Download</qcss-button></a>
+		<qcss-button left id="run">Run</qcss-button>
+		<qcss-button left id="share">Share</qcss-button>
+		<qcss-button left id="button-ok-next">Ok</qcss-button>
+		<br><br>
+		<textarea qcss-input id="text"></textarea>
+	</div>
+	<tool-is>
+		<qcss-text>Html</qcss-text>
+		<br>
+		<qcss-button left><</qcss-button>
+		<qcss-button left>/</qcss-button>
+		<qcss-button left>html</qcss-button>
+		<qcss-button left>body</qcss-button>
+		<qcss-button left>head</qcss-button>
+		<qcss-button left>p</qcss-button>
+		<qcss-button left>h1</qcss-button>
+		<qcss-button left>h2</qcss-button>
+		<qcss-button left>h3</qcss-button>
+		<qcss-button left>div</qcss-button>
+		<qcss-button left>br</qcss-button>
+		<qcss-button left>script</qcss-button>
+		<qcss-button left>></qcss-button>
+		<qcss-button left><- Delete</qcss-button>
+		<qcss-button left>Enter</qcss-button>
+	</tool-is>
+
+	<script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+	<script src="main.js"></script>
+</body>
+</html>
