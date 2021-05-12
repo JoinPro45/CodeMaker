@@ -1,3 +1,10 @@
+		function insertMetachars(sStartTag, sEndTag) {
+ 			var bDouble = arguments.length > 1, oMsgInput = document.getElementById("text"), nSelStart = oMsgInput.selectionStart, nSelEnd = oMsgInput.selectionEnd, sOldText = oMsgInput.value;
+ 			oMsgInput.value = sOldText.substring(0, nSelStart) + (bDouble ? sStartTag + sOldText.substring(nSelStart, nSelEnd) + sEndTag : sStartTag) + sOldText.substring(nSelEnd);
+  			oMsgInput.setSelectionRange(bDouble || nSelStart === nSelEnd ? nSelStart + sStartTag.length : nSelStart, (bDouble ? nSelEnd : nSelStart) + sStartTag.length);
+  			oMsgInput.focus();
+		}
+
 		if (document.URL.indexOf("codeQR") != -1) {
 			var code = decodeURI(document.URL.slice(document.URL.indexOf("codeQR") + 7)).split(":CodeMaker:");
 			if(localStorage.filesCode.indexOf(code[0]) == -1) {
@@ -51,7 +58,7 @@
 			 window.location.reload();
 		});
 
-		$("#save").click(function() {
+		$("#text").bind('input', function() {
 			var text1 = localStorage.filesCodeText.split("#CodeMeker#");
 			text1[id] = $("#text").val();
 			localStorage.filesCodeText = text1.join("#CodeMeker#");
@@ -79,13 +86,8 @@
 		});
 		$("tool-is").click(function(e) {
 			var teg = $(e.toElement).text();
-			if(teg == "<- Delete") {
-				$('#text').val($('#text').val().slice(0,-1));
-			}
-			else if(teg == "Enter") {
-				$('#text').val($('#text').val() + "\n");
-			}
-			else {
-				$('#text').val($('#text').val() + teg);
+			console.log(teg);
+			if(teg.indexOf(" ") == -1) {
+				insertMetachars(teg);
 			}
 		});
