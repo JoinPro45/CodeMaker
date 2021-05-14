@@ -1,3 +1,9 @@
+		var codeTag = {
+			script: ["var", "=", "==", ">", "<", "[]", '""', "{}", "()", "function", "for", "alert", "prompt", "if", "else"],
+			style: ["color", "red", "#", "margin", "px", ":", ";"],
+			html: ["<", "/", "html", "body", "head", "title", "meta", "p", "h1", "h2", "h3", "h4", "h5", "h6", "script", "script", "br", "style", ">", 'style=""', 'id=""', 'class=""', 'onclick=""', 'charset="utf-8"']
+		};
+
 		function insertMetachars(sStartTag, sEndTag) {
  			var bDouble = arguments.length > 1, oMsgInput = document.getElementById("text"), nSelStart = oMsgInput.selectionStart, nSelEnd = oMsgInput.selectionEnd, sOldText = oMsgInput.value;
  			oMsgInput.value = sOldText.substring(0, nSelStart) + (bDouble ? sStartTag + sOldText.substring(nSelStart, nSelEnd) + sEndTag : sStartTag) + sOldText.substring(nSelEnd);
@@ -62,6 +68,15 @@
 			var text1 = localStorage.filesCodeText.split("#CodeMeker#");
 			text1[id] = $("#text").val();
 			localStorage.filesCodeText = text1.join("#CodeMeker#");
+
+			var oMsgInput = document.getElementById("text"), mass = Object.keys(codeTag), nSelStart = oMsgInput.selectionStart, Text = oMsgInput.value;
+			for(var i = mass.length; i >= 0; i--) {
+				if (Text.indexOf(mass[i], nSelStart-10) != -1){
+					$("#list").remove();
+					$("tool-is").append('<div id="list"><qcss-button left>' + codeTag[mass[i]].join("</qcss-button><qcss-button left>") + "</qcss-button></div>");
+					console.log(mass[i]);
+				}
+			}
 		});
 		$("#download").click(function() {
 			var text = "data:text/html," + $("#text").val();
@@ -86,7 +101,6 @@
 		});
 		$("tool-is").click(function(e) {
 			var teg = $(e.toElement).text();
-			console.log(teg);
 			if(teg.indexOf(" ") == -1) {
 				insertMetachars(teg);
 			}
