@@ -1,8 +1,20 @@
 		var codeTag = {
-			script: ["var", "=", "==", ">", "<", "[]", '""', "{}", "()", "function", "for", "alert", "prompt", "if", "else"],
-			style: ["color", "red", "#", "margin", "px", ":", ";"],
-			html: ["<", "/", "html", "body", "head", "title", "meta", "p", "h1", "h2", "h3", "h4", "h5", "h6", "script", "script", "br", "style", ">", 'style=""', 'id=""', 'class=""', 'onclick=""', 'charset="utf-8"']
+			script: ["var", "=", "==", ">", "||", "&&", "<", "[]", '""', "{}", "()", "function", "for", "alert", "prompt", "if", "else", "console.log", "while", "document", "getElementById", ";"],
+			style: ["color", "red", "#", "margin", "px", "padding", ":", ";", "borde", "black", "green", "-radius"],
+			html: ["<", "/", "html", "body", "head", "title", "meta", "p", "h1", "h2", "h3", "h4", "h5", "h6", "script", "script", "br", "style", ">", 'style=""', 'id=""', 'class=""', 'onclick=""', 'charset="utf-8"', "!DOCTYPE html", 'href=""', 'rel=""'],
+			py: ["=", "print", "()", "in", "input", "for", "while", "[]", ":", "def", "import", "from", "if", "else", "elif", '""', "%"]
 		};
+
+		function textSmelTeg() {
+			var oMsgInput = document.getElementById("text"), mass = Object.keys(codeTag), nSelStart = oMsgInput.selectionStart, Text = oMsgInput.value;
+			for(var i = mass.length; i >= 0; i--) {
+				if (Text.indexOf(mass[i], nSelStart-10) != -1 || $("#file-name").text().indexOf(mass[i]) != -1){
+					$("#list").remove()
+					$("tool-is").append('<div id="list"><qcss-button left>' + codeTag[mass[i]].join("</qcss-button><qcss-button left>") + "</qcss-button></div>");
+					console.log(mass[i]);
+				}
+			}
+		}
 
 		function insertMetachars(sStartTag, sEndTag) {
  			var bDouble = arguments.length > 1, oMsgInput = document.getElementById("text"), nSelStart = oMsgInput.selectionStart, nSelEnd = oMsgInput.selectionEnd, sOldText = oMsgInput.value;
@@ -69,15 +81,10 @@
 			text1[id] = $("#text").val();
 			localStorage.filesCodeText = text1.join("#CodeMeker#");
 
-			var oMsgInput = document.getElementById("text"), mass = Object.keys(codeTag), nSelStart = oMsgInput.selectionStart, Text = oMsgInput.value;
-			for(var i = mass.length; i >= 0; i--) {
-				if (Text.indexOf(mass[i], nSelStart-10) != -1){
-					$("#list").remove();
-					$("tool-is").append('<div id="list"><qcss-button left>' + codeTag[mass[i]].join("</qcss-button><qcss-button left>") + "</qcss-button></div>");
-					console.log(mass[i]);
-				}
-			}
+			textSmelTeg();
 		});
+		$("#text").click(textSmelTeg);
+
 		$("#download").click(function() {
 			var text = "data:text/html," + $("#text").val();
 			$("#download").attr("href", text);
@@ -101,7 +108,22 @@
 		});
 		$("tool-is").click(function(e) {
 			var teg = $(e.toElement).text();
-			if(teg.indexOf(" ") == -1) {
+			if(teg.indexOf("Code") == -1) {
 				insertMetachars(teg);
 			}
 		});
+
+		function readFile(input) {
+  			let file = input.files[0];
+
+  			let reader = new FileReader();
+
+  			reader.readAsText(file);
+
+  			reader.onload = function() {
+    			localStorage.filesCode += "#CodeMeker#" + file.name;
+				localStorage.filesCodeText += "#CodeMeker#" + reader.result;
+
+				window.location.reload();
+  			};
+		}
