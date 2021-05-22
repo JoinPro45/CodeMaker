@@ -1,3 +1,8 @@
+		if ('serviceWorker' in navigator) {
+  			window.addEventListener('load', function() {
+    				navigator.serviceWorker.register('<add-path-here>/pwabuilder-sw.js');
+			});
+		}
 		var codeTag = {
 			script: ["var", "=", "==", ">", "||", "&&", "<", "[]", '""', "{}", "()", "function", "for", "alert", "prompt", "if", "else", "console.log", "while", "document", "getElementById", ";", ".", "push", "pop"],
 			style: ["color", "red", "#", "margin", "px", "padding", ":", ";", "borde", "black", "green", "-radius"],
