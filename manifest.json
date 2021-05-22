@@ -7,9 +7,13 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "icon.png",
+      "src": "https://joinpro45.github.io/CodeMaker/icon.png",
       "type": "image/png",
       "sizes": "512x512"
     }
-  ]
+  ],
+  "url": "https://joinpro45.github.io/CodeMaker/",
+  "manifestUrl": "https://joinpro45.github.io/CodeMaker/manifest.json",
+  "lang": "",
+  "screenshots": []
 }
