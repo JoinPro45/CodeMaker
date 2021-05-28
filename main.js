@@ -54,7 +54,7 @@
 		var id = "";
 
 		for(var i = files.length - 1; i > 0; i--) {
-			$("#files").append('<qcss-button id="' + i + '">' + files[i] + "</qcss-button>");
+			$("#files").append('<qcss-button left id="' + i + '">' + files[i] + "</qcss-button>");
 			$("#" + i).click(function() {
 				$("#edit").show();
 				$("#files").hide();
