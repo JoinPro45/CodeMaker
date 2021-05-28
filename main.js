@@ -1,19 +1,20 @@
-		if ('serviceWorker' in navigator) {
-  			window.addEventListener('load', function() {
-    				navigator.serviceWorker.register('pwabuilder-sw/pwabuilder-sw.js');
-			});
-		}
 		var codeTag = {
-			script: ["var", "=", "==", ">", "||", "&&", "<", "[]", '""', "{}", "()", "function", "for", "alert", "prompt", "if", "else", "console.log", "while", "document", "getElementById", ";", ".", "push", "pop"],
+			script: ["var", "=", "==", ">", "||", "&&", "<", "[]", '""', "{}", "()", "function", "for", "alert", "prompt", "if", "else", "console.log", "while", "document", "getElementById", ";", "value", "innerHTML", "onclick", "this", "prototype", "new"],
 			style: ["color", "red", "#", "margin", "px", "padding", ":", ";", "borde", "black", "green", "-radius"],
-			html: ["<", "/", "html", "body", "head", "title", "meta", "p", "h1", "h2", "h3", "h4", "h5", "h6", "script", "script", "br", "style", ">", 'style=""', 'id=""', 'class=""', 'onclick=""', 'charset="utf-8"', "!DOCTYPE html", 'href=""', 'rel=""'],
-			py: ["=", "print", "()", "in", "input", "for", "while", "[]", ":", "def", "import", "from", "if", "else", "elif", '""', "%"]
+			html: ["<", "/", "html", "body", "head", "title", "meta", "p", "h1", "h2", "h3", "h4", "h5", "h6", "script", "br", "style", ">", 'style=""', 'id=""', 'class=""', 'onclick=""', 'charset="utf-8"', "!DOCTYPE html", 'href=""', 'rel=""'],
+			py: ["=", "print", "()", "in", "input", "for", "while", "[]", ":", "def", "import", "from", "if", "else", "elif", '""', "%", "import", "from", "*"]
 		};
+
+		function saveCode() {
+			var text1 = localStorage.filesCodeText.split("#CodeMeker#");
+			text1[id] = $("#text").val();
+			localStorage.filesCodeText = text1.join("#CodeMeker#");
+		}
 
 		function textSmelTeg() {
 			var oMsgInput = document.getElementById("text"), mass = Object.keys(codeTag), nSelStart = oMsgInput.selectionStart, Text = oMsgInput.value;
 			for(var i = mass.length; i >= 0; i--) {
-				if (Text.indexOf(mass[i], nSelStart-10) != -1 || $("#file-name").text().indexOf(mass[i]) != -1){
+				if (Text.slice(0, nSelStart).indexOf(mass[i]) != -1 || $("#file-name").text().indexOf(mass[i]) != -1){
 					$("#list").remove()
 					$("tool-is").append('<div id="list"><qcss-button left>' + codeTag[mass[i]].join("</qcss-button><qcss-button left>") + "</qcss-button></div>");
 					console.log(mass[i]);
@@ -82,9 +83,7 @@
 		});
 
 		$("#text").bind('input', function() {
-			var text1 = localStorage.filesCodeText.split("#CodeMeker#");
-			text1[id] = $("#text").val();
-			localStorage.filesCodeText = text1.join("#CodeMeker#");
+			saveCode();
 
 			textSmelTeg();
 		});
@@ -116,6 +115,7 @@
 			if(teg.indexOf("Code") == -1) {
 				insertMetachars(teg);
 			}
+			saveCode();
 		});
 
 		function readFile(input) {
