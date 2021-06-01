@@ -19,18 +19,18 @@
 			width: 98%;
 			height: 80%;
 		}
-		tool-is {
+		#tool-is {
 			position: absolute;
   			left: 0;
  			bottom: 0;
  			width: 100%;
  			height: 50px;
- 			padding: 20px;
+ 			padding: 10px;
  			overflow: scroll;
 		}
 	</style>
 </head>
-<body>
+<body black>
 	<div id="share-gui" center>
 		<h1-qcss>URL add:</h1-qcss>
 		<br><br>
@@ -55,13 +55,27 @@
 		<br><br>
 		<textarea qcss-input id="text"></textarea>
 	</div>
-	<tool-is>
-				<qcss-text>Code</qcss-text>
-				<br>
-				<div left id="list">
-				
-				</div>
-	</tool-is>
+	<div id="run-menu">
+		<qcss-button left id="button-edit-run">Ok</qcss-button>
+		<br><br><br>
+		<iframe 
+			src="https://joinpro45.github.io/CodeMaker"
+			id="iframe-run"
+			frameborder="0px"
+			qcss-input
+			width="90%"
+			height="100%" 
+			style="background: White;">
+		</iframe>
+	</div>
+
+	<div id="tool-is">
+		<qcss-text>Code</qcss-text>
+		<br>
+		<div left id="list">
+		
+		</div>
+	</div>
 
 	<script src="https://code.jquery.com/jquery-2.1.0.js"></script>
 	<script src="main.js"></script>

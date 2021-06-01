@@ -16,7 +16,7 @@
 			for(var i = mass.length; i >= 0; i--) {
 				if (Text.slice(0, nSelStart).indexOf(mass[i]) != -1 || $("#file-name").text().indexOf(mass[i]) != -1){
 					$("#list").remove()
-					$("tool-is").append('<div id="list"><qcss-button left>' + codeTag[mass[i]].join("</qcss-button><qcss-button left>") + "</qcss-button></div>");
+					$("#tool-is").append('<div id="list"><qcss-button left>' + codeTag[mass[i]].join("</qcss-button><qcss-button left>") + "</qcss-button></div>");
 					console.log(mass[i]);
 				}
 			}
@@ -40,7 +40,8 @@
 
 		$("#edit").hide();
 		$("#share-gui").hide();
-		$("tool-is").hide();
+		$("#tool-is").hide();
+		$("#run-menu").hide();
 
 		if(localStorage.filesCode == undefined) {
 			localStorage.filesCode = "";
@@ -54,7 +55,7 @@
 		var id = "";
 
 		for(var i = files.length - 1; i > 0; i--) {
-			$("#files").append('<qcss-button left id="' + i + '">' + files[i] + "</qcss-button>");
+			$("#files").append('<qcss-button id="' + i + '">' + files[i] + "</qcss-button>");
 			$("#" + i).click(function() {
 				$("#edit").show();
 				$("#files").hide();
@@ -66,7 +67,7 @@
 				$("#download").attr("download", name);
 				$("#text").val(text[id]);
 
-				$("tool-is").show();
+				$("#tool-is").show();
 			});
 		}
 
@@ -84,7 +85,6 @@
 
 		$("#text").bind('input', function() {
 			saveCode();
-
 			textSmelTeg();
 		});
 		$("#text").click(textSmelTeg);
@@ -95,11 +95,15 @@
 		});
 		$("#run").click(function() {
 			var text = "data:text/html," + $("#text").val();
-			prompt("URL:", text);
+			$("#iframe-run").attr("src", text);
+			$("#run-menu").show();
+			$("#edit").hide();
+			$("#tool-is").hide();
 		});
 		$("#share").click(function() {
 			$("#share-gui").show();
 			$("#edit").hide();
+			$("#tool-is").hide();
 			var url = document.URL + "?codeQR=" + $("#file-name").text() + ":CodeMaker:" + $("#text").val();
 			url = encodeURI(url);
 			$("#url").val(url);
@@ -110,12 +114,17 @@
 		$("#button-ok-next").click(function() {
 			window.location.reload();
 		});
-		$("tool-is").click(function(e) {
+		$("#tool-is").click(function(e) {
 			var teg = $(e.toElement).text();
 			if(teg.indexOf("Code") == -1) {
 				insertMetachars(teg);
 			}
 			saveCode();
+		});
+		$("#button-edit-run").click(function() {
+			$("#run-menu").hide();
+			$("#edit").show();
+			$("#tool-is").show();
 		});
 
 		function readFile(input) {
