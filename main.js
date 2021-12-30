@@ -1,9 +1,12 @@
 		var codeTag = {
-			script: ["var", "=", "==", ">", "||", "&&", "<", "[]", '""', "{}", "()", "function", "for", "alert", "prompt", "if", "else", "console.log", "while", "document", "getElementById", ";", "value", "innerHTML", "onclick", "this", "prototype", "new"],
-			style: ["color", "red", "#", "margin", "px", "padding", ":", ";", "borde", "black", "green", "-radius"],
+			script: ["var", "=", "==", ">", "||", "&&", "<", "[]", '""', "{}", "()", "function", "for", "alert", "prompt", "if", "else", "console.log", "while", "document", "getElementById", ";", "value", "innerHTML", "onclick", "this", "prototype", "new", "class", "$()"],
+			style: ["color", "red", "#", "margin", "px", "padding", ":", ";", "borde", "black", "green", "borde-radius", ".", "solid", "font-size", "font-family", "float", "background"],
 			html: ["<", "/", "html", "body", "head", "title", "meta", "p", "h1", "h2", "h3", "h4", "h5", "h6", "script", "br", "style", ">", 'style=""', 'id=""', 'class=""', 'onclick=""', 'charset="utf-8"', "!DOCTYPE html", 'href=""', 'rel=""'],
 			py: ["=", "print", "()", "in", "input", "for", "while", "[]", ":", "def", "import", "from", "if", "else", "elif", '""', "%", "import", "from", "*"]
 		};
+
+		codeTag.js = codeTag.script;
+		codeTag.css = codeTag.style;
 
 		function saveCode() {
 			var text1 = localStorage.filesCodeText.split("#CodeMeker#");
@@ -15,8 +18,13 @@
 			var oMsgInput = document.getElementById("text"), mass = Object.keys(codeTag), nSelStart = oMsgInput.selectionStart, Text = oMsgInput.value;
 			for(var i = mass.length; i >= 0; i--) {
 				if (Text.slice(0, nSelStart).indexOf(mass[i]) != -1 || $("#file-name").text().indexOf(mass[i]) != -1){
-					$("#list").remove()
-					$("#tool-is").append('<div id="list"><qcss-button left>' + codeTag[mass[i]].join("</qcss-button><qcss-button left>") + "</qcss-button></div>");
+					$("#list").remove();
+					$("#tool-is").append('<div id="list"></div>');
+					for (var x = codeTag[mass[i]].length-1; x >= 0; x--){
+						if (codeTag[mass[i]][x].indexOf(Text[nSelStart-1]) != -1){
+							$("#list").append('<qcss-button left>' + codeTag[mass[i]][x] + "</qcss-button>");
+						} 
+					}
 					console.log(mass[i]);
 				}
 			}
@@ -72,15 +80,17 @@
 		}
 
 		$("#new").click(function() {
-			var name = prompt("Название файла(index.html, css.css):");
+			var name = prompt("File name (Название файла)(index.html, css.css):");
 			localStorage.filesCode += "#CodeMeker#" + name;
 			localStorage.filesCodeText += "#CodeMeker#" + name;
 			window.location.reload();
 		});
 		$("#delete").click(function() {
-			 localStorage.filesCode = "";
-			 localStorage.filesCodeText = "";
-			 window.location.reload();
+			if (confirm("Are you sure you want to delete everything?(Вы точно хотите удалить все?)")) {
+				localStorage.filesCode = "";
+				localStorage.filesCodeText = "";
+				window.location.reload();
+			}
 		});
 
 		$("#text").bind('input', function() {
@@ -92,6 +102,13 @@
 		$("#download").click(function() {
 			var text = "data:text/html," + $("#text").val();
 			$("#download").attr("href", text);
+		});
+		$("#tool-is").click(function(e) {
+			var teg = $(e.originalEvent.target);
+			if(teg.text().indexOf("Code") == -1 && teg.attr("id") != "list") {
+				insertMetachars(teg.text().slice(1, teg.text().length));
+			}
+			saveCode();
 		});
 		$("#run").click(function() {
 			var text = "data:text/html," + $("#text").val();
@@ -113,13 +130,6 @@
 		});
 		$("#button-ok-next").click(function() {
 			window.location.reload();
-		});
-		$("#tool-is").click(function(e) {
-			var teg = $(e.toElement).text();
-			if(teg.indexOf("Code") == -1) {
-				insertMetachars(teg);
-			}
-			saveCode();
 		});
 		$("#button-edit-run").click(function() {
 			$("#run-menu").hide();
