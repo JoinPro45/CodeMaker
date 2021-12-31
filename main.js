@@ -86,8 +86,8 @@
 					$("#files").hide();
 
 					var name = $(this).text(),
-						lang = name.split(".")[1],
-						id = $(this).attr("id");
+						lang = name.split(".")[1];
+					id = $(this).attr("id");
 
 					$("#file-name").text(name);
 					$("#download").attr("download", name);
