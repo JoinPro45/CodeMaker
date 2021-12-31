@@ -4,7 +4,6 @@
   "start_url": ".",
   "display": "standalone",
   "background_color": "#fafafa",
-  "orientation": "portrait-primary",
   "icons": [
     {
       "src": "https://joinpro45.github.io/CodeMaker/icon.png",

@@ -2,7 +2,13 @@
 			script: ["var", "=", "==", ">", "||", "&&", "<", "[]", '""', "{}", "()", "function", "for", "alert", "prompt", "if", "else", "console.log", "while", "document", "getElementById", ";", "value", "innerHTML", "onclick", "this", "prototype", "new", "class", "$()"],
 			style: ["color", "red", "#", "margin", "px", "padding", ":", ";", "borde", "black", "green", "borde-radius", ".", "solid", "font-size", "font-family", "float", "background"],
 			html: ["<", "/", "html", "body", "head", "title", "meta", "p", "h1", "h2", "h3", "h4", "h5", "h6", "script", "br", "style", ">", 'style=""', 'id=""', 'class=""', 'onclick=""', 'charset="utf-8"', "!DOCTYPE html", 'href=""', 'rel=""'],
-			py: ["=", "print", "()", "in", "input", "for", "while", "[]", ":", "def", "import", "from", "if", "else", "elif", '""', "%", "import", "from", "*"]
+			py: ["=", "print", "()", "in", "input", "for", "while", "[]", ":", "def", "import", "from", "if", "else", "elif", '""', "%", "import", "from", "*"],
+			c: ["void", "=", "*", "()", ";", '""', "{}", "[]", "&", "&&", "==", ">", "|", "int", "main()", "char", "#include", "#define", "if", "else", "float", "stdio.h", "count", "bool", "printf", "scanf"]
+		};
+		 
+		var codeRun = {
+			html: ["", ""],
+			js: ["<script>", "</script>"]
 		};
 
 		codeTag.js = codeTag.script;
@@ -16,16 +22,26 @@
 
 		function textSmelTeg() {
 			var oMsgInput = document.getElementById("text"), mass = Object.keys(codeTag), nSelStart = oMsgInput.selectionStart, Text = oMsgInput.value;
-			for(var i = mass.length; i >= 0; i--) {
-				if (Text.slice(0, nSelStart).indexOf(mass[i]) != -1 || $("#file-name").text().indexOf(mass[i]) != -1){
-					$("#list").remove();
-					$("#tool-is").append('<div id="list"></div>');
-					for (var x = codeTag[mass[i]].length-1; x >= 0; x--){
-						if (codeTag[mass[i]][x].indexOf(Text[nSelStart-1]) != -1){
-							$("#list").append('<qcss-button left>' + codeTag[mass[i]][x] + "</qcss-button>");
-						} 
+			if(Text[nSelStart-1] == " " || Text[nSelStart-1] == undefined || Text[nSelStart-1] == "") {
+				for(var i = mass.length; i >= 0; i--) {
+					if (Text.slice(0, nSelStart).indexOf(mass[i]) != -1 || $("#file-name").text().indexOf(mass[i]) != -1){
+						$("#list").remove();
+						$("#tool-is").append('<div id="list"></div>');
+						$("#list").append('<qcss-button id="no-d" left>' + codeTag[mass[i]].join('</qcss-button><qcss-button id="no-d" left>') + "</qcss-button>");
 					}
-					console.log(mass[i]);
+				}
+			} else {
+				for(var i = mass.length; i >= 0; i--) {
+					if (Text.slice(0, nSelStart).indexOf(mass[i]) != -1 || $("#file-name").text().indexOf(mass[i]) != -1){
+						$("#list").remove();
+						$("#tool-is").append('<div id="list"></div>');
+						for (var x = codeTag[mass[i]].length-1; x >= 0; x--){
+							if (codeTag[mass[i]][x].indexOf(Text[nSelStart-1]) != -1){
+								$("#list").append('<qcss-button left>' + codeTag[mass[i]][x] + "</qcss-button>");
+							} 
+						}
+						console.log(mass[i]);
+					}
 				}
 			}
 		}
@@ -62,21 +78,27 @@
 		var text = localStorage.filesCodeText.split("#CodeMeker#");
 		var id = "";
 
-		for(var i = files.length - 1; i > 0; i--) {
-			$("#files").append('<qcss-button id="' + i + '">' + files[i] + "</qcss-button>");
-			$("#" + i).click(function() {
-				$("#edit").show();
-				$("#files").hide();
+		for(var i = files.length - 1; i >= 0; i--) {
+			if(files[i] != "") {
+				$("#files").append('<qcss-button id="' + i + '">' + files[i] + "</qcss-button>");
+				$("#" + i).click(function() {
+					$("#edit").show();
+					$("#files").hide();
 
-				var name = $(this).text();
-				id = $(this).attr("id");
+					var name = $(this).text(),
+						lang = name.split(".")[1],
+						id = $(this).attr("id");
 
-				$("#file-name").text(name);
-				$("#download").attr("download", name);
-				$("#text").val(text[id]);
+					$("#file-name").text(name);
+					$("#download").attr("download", name);
+					$("#text").val(text[id]);
 
-				$("#tool-is").show();
-			});
+					if(lang != undefined && codeRun[lang] != undefined) $("#run").show();
+					else $("#run").hide();
+
+					$("#tool-is").show();
+				});
+			}
 		}
 
 		$("#new").click(function() {
@@ -85,7 +107,7 @@
 			localStorage.filesCodeText += "#CodeMeker#" + name;
 			window.location.reload();
 		});
-		$("#delete").click(function() {
+		$("#delete-all").click(function() {
 			if (confirm("Are you sure you want to delete everything?(Вы точно хотите удалить все?)")) {
 				localStorage.filesCode = "";
 				localStorage.filesCodeText = "";
@@ -106,16 +128,38 @@
 		$("#tool-is").click(function(e) {
 			var teg = $(e.originalEvent.target);
 			if(teg.text().indexOf("Code") == -1 && teg.attr("id") != "list") {
-				insertMetachars(teg.text().slice(1, teg.text().length));
+				if(teg.attr("id") != "no-d") insertMetachars(teg.text().slice(1, teg.text().length) + " ");
+				else insertMetachars(teg.text() + " ");
+
+				textSmelTeg();
 			}
 			saveCode();
 		});
 		$("#run").click(function() {
-			var text = "data:text/html," + $("#text").val();
-			$("#iframe-run").attr("src", text);
-			$("#run-menu").show();
-			$("#edit").hide();
-			$("#tool-is").hide();
+			var lang = $("#file-name").text().split(".")[1],
+				text = $("#text").val();
+			if(lang != undefined && codeRun[lang] != undefined) {
+				$("#iframe-run").attr("src", 'data:text/html,<meta charset="utf-8">' + codeRun[lang][0] + text + codeRun[lang][1]);
+				$("#run-menu").show();
+				$("#edit").hide();
+				$("#tool-is").hide();
+			} else {
+				alert("Этого языка нет в списке запуска CodeMaker");
+			}
+		});
+		$("#delete").click(function() {
+			if(confirm('Are you sure you want to delete this file?(Вы точно хотите удалить этот файл?)')) {
+				var filesCodeName = localStorage.filesCode.split("#CodeMeker#");
+				var filesCodeText = localStorage.filesCodeText.split("#CodeMeker#");
+				filesCodeName.splice(id, 1);
+				filesCodeText.splice(id, 1);
+				//alert(filesCodeName);
+				//alert(filesCodeText);
+				localStorage.filesCodeText = filesCodeText.join("#CodeMeker#");
+				localStorage.filesCode = filesCodeName.join("#CodeMeker#");
+
+				window.location.reload();
+			}
 		});
 		$("#share").click(function() {
 			$("#share-gui").show();
