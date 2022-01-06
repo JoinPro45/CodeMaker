@@ -1,9 +1,10 @@
 		var codeTag = {
-			script: ["var", "=", "==", ">", "||", "&&", "<", "[]", '""', "{}", "()", "function", "for", "alert", "prompt", "if", "else", "console.log", "while", "document", "getElementById", ";", "value", "innerHTML", "onclick", "this", "prototype", "new", "class", "$()"],
+			script: ["var", "=", "==", ">", "||", "&&", "<", "[]", '""', "{}", "()", "function", "for", "alert", "prompt", "if", "else", "console.log", "while", "document", "getElementById", ";", "value", "innerHTML", "onclick", "this", "prototype", "new", "class", "$()", "getElementsByClassName", "getElementsByName", "hidden", "onmousemove", "WebSocket", "onmessage", "onclose"],
 			style: ["color", "red", "#", "margin", "px", "padding", ":", ";", "borde", "black", "green", "borde-radius", ".", "solid", "font-size", "font-family", "float", "background"],
 			html: ["<", "/", "html", "body", "head", "title", "meta", "p", "h1", "h2", "h3", "h4", "h5", "h6", "script", "br", "style", ">", 'style=""', 'id=""', 'class=""', 'onclick=""', 'charset="utf-8"', "!DOCTYPE html", 'href=""', 'rel=""'],
 			py: ["=", "print", "()", "in", "input", "for", "while", "[]", ":", "def", "import", "from", "if", "else", "elif", '""', "%", "import", "from", "*"],
-			c: ["void", "=", "*", "()", ";", '""', "{}", "[]", "&", "&&", "==", ">", "|", "int", "main()", "char", "#include", "#define", "if", "else", "float", "stdio.h", "count", "bool", "printf", "scanf"]
+			c: ["void", "=", "*", "()", ";", '""', "{}", "[]", "&", "&&", "==", ">", "|", "int", "main()", "char", "#include", "#define", "if", "else", "float", "stdio.h", "count", "bool", "printf", "scanf"],
+			go: ["()", "[]", "{}", ":=", '""', "func", "import", ">", "<", "==", "main", "package", "fmt", "Println", "Print"]
 		};
 		 
 		var codeRun = {
