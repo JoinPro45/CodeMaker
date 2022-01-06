@@ -25,7 +25,7 @@
 			var oMsgInput = document.getElementById("text"), mass = Object.keys(codeTag), nSelStart = oMsgInput.selectionStart, Text = oMsgInput.value;
 			if(Text[nSelStart-1] == " " || Text[nSelStart-1] == undefined || Text[nSelStart-1] == "") {
 				for(var i = mass.length; i >= 0; i--) {
-					if (Text.slice(0, nSelStart).indexOf(mass[i]) != -1 || $("#file-name").text().indexOf(mass[i]) != -1){
+					if ($("#file-name").text().indexOf(mass[i]) != -1){
 						$("#list").remove();
 						$("#tool-is").append('<div id="list"></div>');
 						$("#list").append('<qcss-button id="no-d" left>' + codeTag[mass[i]].join('</qcss-button><qcss-button id="no-d" left>') + "</qcss-button>");
@@ -33,7 +33,7 @@
 				}
 			} else {
 				for(var i = mass.length; i >= 0; i--) {
-					if (Text.slice(0, nSelStart).indexOf(mass[i]) != -1 || $("#file-name").text().indexOf(mass[i]) != -1){
+					if ($("#file-name").text().indexOf(mass[i]) != -1){
 						$("#list").remove();
 						$("#tool-is").append('<div id="list"></div>');
 						for (var x = codeTag[mass[i]].length-1; x >= 0; x--){
